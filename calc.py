@@ -6,7 +6,7 @@ import datetime as dt
 import requests
 import os
 
-SCKEY=os.environ.get('SEND')
+SCKEY=os.environ.get('SCKEY')
 
 def send_server(title, text):
     api = "https://sctapi.ftqq.com/{}.send".format(SCKEY)
