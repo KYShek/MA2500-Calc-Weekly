@@ -3,7 +3,8 @@ name: MA2500
 on:
   schedule:
     - cron: '0 10 * * 5'
-
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: unbuntu-20.04
