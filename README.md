@@ -13,12 +13,12 @@
 #### 0. 开始
 点击本项目右上角的`Fork`
 
-![](./img/readme-1.jpg)
+![](./img/readme-1.png)
 
 #### 1.获取 SendKey
 
 #### 2.添加 SEND Secret
 在自己 Fork 后的项目的页面依次点击 `Settings`-`Secrets`-`Actions`-`New repository secret`
 
-![](./img/readme-3.jpg)
+![](./img/readme-3.png)
 
