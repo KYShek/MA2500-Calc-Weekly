@@ -15,16 +15,32 @@
 
 ![](./img/readme-1.png)
 
-#### 1.获取 SendKey
+#### 1. 获取 SendKey
 前往<https://sct.ftqq.com/sendkey>
 微信扫码关注服务号登录后复制SendKey
 
 ![](./img/readme-2.png)
 
-#### 2.添加 SEND Secret
+#### 2. 添加 SEND Secret
 在自己 Fork 后的项目的页面依次点击 `Settings`-`Secrets`-`Actions`-`New repository secret`
 
 ![](./img/readme-3.1.png)
 
+如图所示， `Name` 处输入 `SEND` ， `Value` 粘贴SandKey
+点击`Add secret`
+
 ![](./img/readme-4.png)
+
+#### 3.开启 Actions
+如图所示
+
+![](./img/readme-5.png)
+
+![](./img/readme-6.png)
+
+此时 Actions 开启成功，程序会在 **北京时间 (UTC+8) 每周五 18:00** 执行一次，如需修改执行时间，可在 `.github/workflows/MA2500.yml` 下修改
+
+可以点击 `Run workflow` 测试提醒一下，确认可以正常执行。
+
+![](./img/readme-7.png)
 
