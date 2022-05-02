@@ -16,6 +16,10 @@
 ![](./img/readme-1.png)
 
 #### 1.获取 SendKey
+前往<https://sct.ftqq.com/sendkey>
+微信扫码关注服务号登录后复制SendKey
+
+![](./img/readme-2.png)
 
 #### 2.添加 SEND Secret
 在自己 Fork 后的项目的页面依次点击 `Settings`-`Secrets`-`Actions`-`New repository secret`
