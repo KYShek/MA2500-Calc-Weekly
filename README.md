@@ -24,7 +24,6 @@
 #### 2.添加 SEND Secret
 在自己 Fork 后的项目的页面依次点击 `Settings`-`Secrets`-`Actions`-`New repository secret`
 
-![](./img/readme-3.png)
 
 ![](./img/readme-4.png)
 
