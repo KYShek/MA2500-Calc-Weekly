@@ -26,7 +26,7 @@
 
 ![](./img/readme-3.1.png)
 
-如图所示， `Name` 处输入 `SEND` ， `Value` 粘贴SandKey
+如图所示， `Name` 处输入 `SEND` ， `Value` 处粘贴SandKey
 点击`Add secret`
 
 ![](./img/readme-4.png)
