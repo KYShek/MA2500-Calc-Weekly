@@ -4,7 +4,7 @@
 项目地址：<https://github.com/KinYuShek/MA2500-Calc-Weekly>
 ## 特色
 - 每周五18点计算上证指数MA2500。
-- 支持在 GitHub Actions 或自建服务器上使用
+- 支持在 GitHub Actions 或自建服务器（开发中）上使用
 - 支持Server酱消息推送接口
 
 ## 使用
