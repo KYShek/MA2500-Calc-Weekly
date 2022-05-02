@@ -9,7 +9,7 @@
 
 ## 使用
 
-### 使用 GitHub Actions 
+### I. 使用 GitHub Actions 
 #### 0. 开始
 点击本项目右上角的`Fork`
 
@@ -44,3 +44,20 @@
 
 ![](./img/readme-7.png)
 
+
+### II. 使用自己的服务器
+此方法适用于自己有服务器，或者在自己电脑上运行的用户，使用 GitHub Actions 的用户请跳过此部分
+
+<details>
+<summary>
+展开全文
+</summary>
+
+开发中，详细信息请查看`server`分支
+
+</details>
+
+***本项目仅供学习交流之用，请勿用于其它用途。***
+
+## Thanks
+大鹅的MA2500
