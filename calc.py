@@ -69,6 +69,7 @@ def calc_MA2500(stock_code):
     date_today=result.loc[0,'date']
     date_today_str = str(date_today.date()) + ": "
 
+    '''
     # for debug purpose
     print()
     print("{}{}收盘点数: {}".format(date_today_str, stock_name, close_today))
@@ -76,6 +77,7 @@ def calc_MA2500(stock_code):
     print("MA2500    点数: {}".format(MA2500))
     print("MA2500x1.2点数: {}".format(MAmul))
     print()
+    '''
 
     if(close_today<=MAdiv):
         title = date_today_str + stock_name + "低于÷1.2线"
