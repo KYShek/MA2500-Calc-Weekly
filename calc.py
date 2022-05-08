@@ -68,7 +68,12 @@ def calc_MA2500():
 
     #GENERATE TITLE
     # 斜杠用来代码换行
-    cont="今日沪指收盘: "+str(close_today)+"\n今日MA2500数据 \n\t *1.2: "+str(MAmul)+"\n\t 均："+str(MA2500)+"\n\t /1.2: "+str(MAdiv)
+    cont = "今日沪指收盘: " + str(close_today) + \
+           "\n今日MA2500数据" +                 \
+           "\n\t *1.2: " + str(MAmul) +        \
+           "\n\t 均 "   + str(MA2500) +        \
+           "\n\t /1.2: " + str(MAdiv)
+
     test_out = cont.replace('\n','\n\n')
 
     return tilt, cont
