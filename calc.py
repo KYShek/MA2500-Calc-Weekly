@@ -54,9 +54,10 @@ def calc_MA2500():
     print("MA2500÷1.2点数: {}".format(MAdiv))
     print("MA2500    点数: {}".format(MA2500))
     print("MA2500x1.2点数: {}".format(MAmul))
+    print()
 
     if(close_today<=MAdiv):
-        tilt="今日沪指低于÷1.2线"
+        title ="今日沪指低于÷1.2线"
     else:
         if(close_today<=MA2500):
             judge="÷1.2"
@@ -64,19 +65,17 @@ def calc_MA2500():
             judge="MA2500"
         else:
             judge="*1.2"
-        tilt="今日沪指高于"+judge+"线"
+        title = "今日沪指高于"+judge+"线"
 
     #GENERATE TITLE
     # 斜杠用来代码换行
-    cont = "今日沪指收盘: " + str(close_today) + \
+    text = "今日沪指收盘: " + str(close_today) + \
            "\n今日MA2500数据" +                 \
            "\n\t *1.2: " + str(MAmul) +        \
            "\n\t 均 "   + str(MA2500) +        \
            "\n\t /1.2: " + str(MAdiv)
 
-    test_out = cont.replace('\n','\n\n')
-
-    return tilt, cont
+    return title, text
 
 def main():
     title = "每周MA2500计算服务异常"
