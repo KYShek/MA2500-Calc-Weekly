@@ -23,24 +23,30 @@ def send_server(title, text):
 
 def calc_MA2500():
     t=dt.datetime.utcnow()
-    t=t+dt.timedelta(hours=8)
-    t11=t+dt.timedelta(days=-365*11-3)
+    t=t+dt.timedelta(hours=8)               # 当前的北京时间
+    t11=t+dt.timedelta(days=-365*11-3)      # 得到11年前的时间，减去3个闰年
     d=t.strftime('%Y-%m-%d')
     d11=t11.strftime('%Y-%m-%d')
     #TIME
     result = pd.DataFrame()
+    # 得到三栏的表格: date日期, code证卷代码, close收盘的点数。
     k = bs.query_history_k_data_plus("sh.000001","date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
+    # 得到k线数据
     result=pd.concat([result,k.get_data()],axis=0,ignore_index=True)
     result.date=pd.to_datetime(result.date)
-    result=result.sort_values(by='date',ascending=False)
+    result=result.sort_values(by='date',ascending=False)        # 按日期排序，今天日期放在最上面
     result=result.reset_index(drop=True)
-    #ESSENTIAL DATA
+
     today=pd.DataFrame()
+    # 得到最近2500天的收盘点数列表
     today['close']=result.nlargest(2500,'date').close
+    # 计算MA2500均值
     MA2500=today.close.astype(float).mean()
+    # 计算MA2500的上下约20%的浮动区间, 并且只取两位小数
     MAdiv=int(MA2500/1.2*100)/100
     MAmul=int((MA2500*1.2)*100)/100
     MA2500=int(MA2500*100)/100
+    # 今天的收盘
     close_today=int(float(result.loc[0,'close'])*100)/100
     #CALC MA2500
     print(MAdiv)
