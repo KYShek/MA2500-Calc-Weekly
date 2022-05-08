@@ -67,16 +67,18 @@ def calc_MA2500(stock_code):
     # 今天的收盘
     close_today=int(float(result.loc[0,'close'])*100)/100
     date_today=result.loc[0,'date']
+    date_today_str = str(date_today.date()) + ": "
 
+    # for debug purpose
     print()
-    print("{}: {}收盘点数: {}".format(date_today.date(), stock_name, close_today))
+    print("{}{}收盘点数: {}".format(date_today_str, stock_name, close_today))
     print("MA2500÷1.2点数: {}".format(MAdiv))
     print("MA2500    点数: {}".format(MA2500))
     print("MA2500x1.2点数: {}".format(MAmul))
     print()
 
     if(close_today<=MAdiv):
-        title ="今日" + stock_name + "低于÷1.2线"
+        title = date_today_str + stock_name + "低于÷1.2线"
     else:
         if(close_today<=MA2500):
             judge="÷1.2"
@@ -84,12 +86,12 @@ def calc_MA2500(stock_code):
             judge="MA2500"
         else:
             judge="*1.2"
-        title = "今日" + stock_name + "高于"+judge+"线"
+        title = date_today_str + stock_name + "高于"+judge+"线"
 
     #GENERATE TITLE
     # 斜杠用来代码换行
-    text = "今日" + stock_name + "收盘: " + str(close_today) + \
-           "\n今日MA2500数据" +                 \
+    text = date_today_str + stock_name + "收盘: " + str(close_today) + \
+           "\n" + date_today_str + "MA2500数据" +                 \
            "\n\t *1.2点数: " + str(MAmul) +    \
            "\n\t 均值点数 "   + str(MA2500) +   \
            "\n\t /1.2点数: " + str(MAdiv)
