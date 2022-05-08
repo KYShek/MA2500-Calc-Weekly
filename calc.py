@@ -9,6 +9,10 @@ import os
 SCKEY=os.environ.get('SCKEY')
 
 def send_server(title, text):
+    if SCKEY == '' or SCKEY is None:
+        print("\nWarning: 微信消息无法发送，请设置sendkey!")
+        return
+
     api = "https://sctapi.ftqq.com/{}.send".format(SCKEY)
     content = text.replace('\n','\n\n')
     data = {
