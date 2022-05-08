@@ -21,6 +21,19 @@ def send_server(title, text):
     res = requests.post(api, data = data)
     return(res)
 
+def get_stock_code_name(stock_code):
+    # 获取证券基本资料
+    rs = bs.query_stock_basic(code=stock_code)
+    # rs = bs.query_stock_basic(code_name="浦发银行")  # 支持模糊查询
+
+    # 打印结果集
+    data_list = []
+    while (rs.error_code == '0') & rs.next():
+        # 获取一条记录，将记录合并在一起
+        data_list.append(rs.get_row_data())
+    result = pd.DataFrame(data_list, columns=rs.fields)
+    return result.loc[0,'code_name']
+
 def calc_MA2500(stock_code):
     t=dt.datetime.utcnow()
     t=t+dt.timedelta(hours=8)               # 当前的北京时间
@@ -30,7 +43,7 @@ def calc_MA2500(stock_code):
     #TIME
     result = pd.DataFrame()
 
-    stock_name = "沪指"
+    stock_name = get_stock_code_name(stock_code)
     # 得到三栏的表格: date日期, code证卷代码, close收盘的点数。
     k = bs.query_history_k_data_plus(stock_code,"date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
     # 得到k线数据
