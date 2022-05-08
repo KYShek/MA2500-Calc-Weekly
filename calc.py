@@ -79,16 +79,26 @@ def calc_MA2500(stock_code):
     print()
     '''
 
+    # recommend:
+    #     低于÷1.2线:   ✔
+    #     高于÷1.2线:   ✓
+    #     高于MA2500线: =
+    #     高于x1.2线:   ✗
+    #
     if(close_today<=MAdiv):
-        title = date_today_str + stock_name + "低于÷1.2线"
+        recommend = "✔"
+        title = date_today_str + stock_name + "低于÷1.2线" + ": " + recommend
     else:
         if(close_today<=MA2500):
             judge="÷1.2"
+            recommend = "✓"
         elif(close_today<=MAmul):
             judge="MA2500"
+            recommend = "="
         else:
             judge="*1.2"
-        title = date_today_str + stock_name + "高于"+judge+"线"
+            recommend = "✗"
+        title = date_today_str + stock_name + "高于"+judge+"线" + ": " + recommend
 
     #GENERATE TITLE
     # 斜杠用来代码换行
