@@ -38,7 +38,7 @@ def calc_MA2500():
     MAmul=int((MA2500*1.2)*100)/100
     MA2500=int(MA2500*100)/100
     close_today=int(float(result.loc[0,'close'])*100)/100
-    #CALC MA2500  
+    #CALC MA2500
     print(MAdiv)
     print(MA2500)
     print(MAmul)
