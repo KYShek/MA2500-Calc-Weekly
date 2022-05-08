@@ -100,14 +100,26 @@ def main():
     title = "每周MA2500计算服务异常"
     text = "登录获取股市数据失败"
 
-    # 计算沪指
-    stock_code = "sh.000001"
-
     try:
         # login boastock server first
         lg = bs.login()
         if (lg.error_code == '0'):
-            title, text = calc_MA2500(stock_code)
+            # 计算沪指
+            title, text = calc_MA2500("sh.000001")
+            send_server(title, text)
+
+            # 华泰
+            title, text = calc_MA2500("sh.601688")
+            send_server(title, text)
+
+            # 广汽
+            title, text = calc_MA2500("sh.601238")
+            send_server(title, text)
+
+            # 招商
+            title, text = calc_MA2500("sh.600999")
+            send_server(title, text)
+
             # logout at last
             bs.logout
     except Exception:
