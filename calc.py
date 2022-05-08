@@ -54,13 +54,13 @@ def calc_MA2500():
         else:
             judge="*1.2"
         tilt="今日沪指高于"+judge+"线"
-    print(tilt)
+
     #GENERATE TITLE
     # 斜杠用来代码换行
     cont="今日沪指收盘: "+str(close_today)+"\n今日MA2500数据 \n\t *1.2: "+str(MAmul)+"\n\t 均："+str(MA2500)+"\n\t /1.2: "+str(MAdiv)
     test_out = cont.replace('\n','\n\n')
-    print(cont)
-    send_server(tilt,cont) #插入在需要推送的地方，我这里的"Her said"是我的标题，msg是我前面爬取的消息'''
+
+    return tilt, cont
 
 def main():
     try:
@@ -69,14 +69,17 @@ def main():
         print('login respond  error_msg:'+lg.error_msg)
         #LOGIN
 
-        calc_MA2500()
+        title, text = calc_MA2500()
 
         bs.logout
     except Exception:
-        error = "服务异常"
-        send_server('每周MA2500计算服务异常',error)
-        print(error)
+        title = "每周MA2500计算服务异常"
+        text = "服务异常"
         print(Exception)
+
+    print(title)
+    print(text)
+    send_server(title, text)
 
 if __name__ == '__main__':
     main()
