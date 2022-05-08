@@ -48,12 +48,13 @@ def calc_MA2500():
     MA2500=int(MA2500*100)/100
     # 今天的收盘
     close_today=int(float(result.loc[0,'close'])*100)/100
-    #CALC MA2500
-    print(MAdiv)
-    print(MA2500)
-    print(MAmul)
-    print(close_today)
-    #
+    date_today=result.loc[0,'date']
+
+    print("{}沪指收盘点数: {}".format(date_today.date(), close_today))
+    print("MA2500÷1.2点数: {}".format(MAdiv))
+    print("MA2500    点数: {}".format(MA2500))
+    print("MA2500x1.2点数: {}".format(MAmul))
+
     if(close_today<=MAdiv):
         tilt="今日沪指低于÷1.2线"
     else:
