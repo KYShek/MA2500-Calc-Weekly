@@ -9,6 +9,9 @@ import os
 SCKEY=os.environ.get('SCKEY')
 
 def send_server(title, text):
+    print(title)
+    print(text)
+
     if SCKEY == '' or SCKEY is None:
         print("\nWarning: 微信消息无法发送，请设置sendkey!")
         return
@@ -66,7 +69,7 @@ def calc_MA2500(stock_code):
     date_today=result.loc[0,'date']
 
     print()
-    print("{}{}收盘点数: {}".format(date_today.date(), stock_name, close_today))
+    print("{}: {}收盘点数: {}".format(date_today.date(), stock_name, close_today))
     print("MA2500÷1.2点数: {}".format(MAdiv))
     print("MA2500    点数: {}".format(MA2500))
     print("MA2500x1.2点数: {}".format(MAmul))
@@ -87,9 +90,9 @@ def calc_MA2500(stock_code):
     # 斜杠用来代码换行
     text = "今日" + stock_name + "收盘: " + str(close_today) + \
            "\n今日MA2500数据" +                 \
-           "\n\t *1.2: " + str(MAmul) +        \
-           "\n\t 均 "   + str(MA2500) +        \
-           "\n\t /1.2: " + str(MAdiv)
+           "\n\t *1.2点数: " + str(MAmul) +    \
+           "\n\t 均值点数 "   + str(MA2500) +   \
+           "\n\t /1.2点数: " + str(MAdiv)
 
     return title, text
 
@@ -109,10 +112,7 @@ def main():
             bs.logout
     except Exception:
         print(Exception)
-
-    print(title)
-    print(text)
-    send_server(title, text)
+        send_server(title, text)
 
 if __name__ == '__main__':
     main()
