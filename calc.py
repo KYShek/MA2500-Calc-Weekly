@@ -21,7 +21,7 @@ def send_server(title, text):
     res = requests.post(api, data = data)
     return(res)
 
-def calc_MA2500():
+def calc_MA2500(stock_code):
     t=dt.datetime.utcnow()
     t=t+dt.timedelta(hours=8)               # 当前的北京时间
     t11=t+dt.timedelta(days=-365*11-3)      # 得到11年前的时间，减去3个闰年
@@ -32,7 +32,7 @@ def calc_MA2500():
 
     stock_name = "沪指"
     # 得到三栏的表格: date日期, code证卷代码, close收盘的点数。
-    k = bs.query_history_k_data_plus("sh.000001","date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
+    k = bs.query_history_k_data_plus(stock_code,"date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
     # 得到k线数据
     result=pd.concat([result,k.get_data()],axis=0,ignore_index=True)
     result.date=pd.to_datetime(result.date)
@@ -52,6 +52,7 @@ def calc_MA2500():
     close_today=int(float(result.loc[0,'close'])*100)/100
     date_today=result.loc[0,'date']
 
+    print()
     print("{}{}收盘点数: {}".format(date_today.date(), stock_name, close_today))
     print("MA2500÷1.2点数: {}".format(MAdiv))
     print("MA2500    点数: {}".format(MA2500))
@@ -83,11 +84,14 @@ def main():
     title = "每周MA2500计算服务异常"
     text = "登录获取股市数据失败"
 
+    # 计算沪指
+    stock_code = "sh.000001"
+
     try:
         # login boastock server first
         lg = bs.login()
         if (lg.error_code == '0'):
-            title, text = calc_MA2500()
+            title, text = calc_MA2500(stock_code)
             # logout at last
             bs.logout
     except Exception:
