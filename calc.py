@@ -29,6 +29,8 @@ def calc_MA2500():
     d11=t11.strftime('%Y-%m-%d')
     #TIME
     result = pd.DataFrame()
+
+    stock_name = "沪指"
     # 得到三栏的表格: date日期, code证卷代码, close收盘的点数。
     k = bs.query_history_k_data_plus("sh.000001","date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
     # 得到k线数据
@@ -50,14 +52,14 @@ def calc_MA2500():
     close_today=int(float(result.loc[0,'close'])*100)/100
     date_today=result.loc[0,'date']
 
-    print("{}沪指收盘点数: {}".format(date_today.date(), close_today))
+    print("{}{}收盘点数: {}".format(date_today.date(), stock_name, close_today))
     print("MA2500÷1.2点数: {}".format(MAdiv))
     print("MA2500    点数: {}".format(MA2500))
     print("MA2500x1.2点数: {}".format(MAmul))
     print()
 
     if(close_today<=MAdiv):
-        title ="今日沪指低于÷1.2线"
+        title ="今日" + stock_name + "低于÷1.2线"
     else:
         if(close_today<=MA2500):
             judge="÷1.2"
@@ -65,11 +67,11 @@ def calc_MA2500():
             judge="MA2500"
         else:
             judge="*1.2"
-        title = "今日沪指高于"+judge+"线"
+        title = "今日" + stock_name + "高于"+judge+"线"
 
     #GENERATE TITLE
     # 斜杠用来代码换行
-    text = "今日沪指收盘: " + str(close_today) + \
+    text = "今日" + stock_name + "收盘: " + str(close_today) + \
            "\n今日MA2500数据" +                 \
            "\n\t *1.2: " + str(MAmul) +        \
            "\n\t 均 "   + str(MA2500) +        \
