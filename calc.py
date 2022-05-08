@@ -63,18 +63,17 @@ def calc_MA2500():
     return tilt, cont
 
 def main():
+    title = "每周MA2500计算服务异常"
+    text = "登录获取股市数据失败"
+
     try:
+        # login boastock server first
         lg = bs.login()
-        print('login respond error_code:'+lg.error_code)
-        print('login respond  error_msg:'+lg.error_msg)
-        #LOGIN
-
-        title, text = calc_MA2500()
-
-        bs.logout
+        if (lg.error_code == '0'):
+            title, text = calc_MA2500()
+            # logout at last
+            bs.logout
     except Exception:
-        title = "每周MA2500计算服务异常"
-        text = "服务异常"
         print(Exception)
 
     print(title)
