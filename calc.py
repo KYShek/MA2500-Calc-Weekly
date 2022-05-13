@@ -10,6 +10,7 @@ SCKEY=os.environ.get('SCKEY')
 
 def send_server(title, text):
     print(title)
+    print()
     print(text)
 
     if SCKEY == '' or SCKEY is None:
@@ -118,20 +119,21 @@ def main():
         # login boastock server first
         lg = bs.login()
         if (lg.error_code == '0'):
-            # 计算沪指
-            title, text = calc_MA2500("sh.000001")
-            send_server(title, text)
+            title = ''
+            text = ''
 
-            # 华泰
-            title, text = calc_MA2500("sh.601688")
-            send_server(title, text)
+            STOCK_CODES = os.environ.get('STOCK_CODES')
+            if STOCK_CODES == '' or STOCK_CODES is None:
+                STOCK_CODES = 'sh.000001'
 
-            # 广汽
-            title, text = calc_MA2500("sh.601238")
-            send_server(title, text)
+            for code in STOCK_CODES.split():
+                brief, content = calc_MA2500(code)
+                if title == "":
+                    title = brief
 
-            # 招商
-            title, text = calc_MA2500("sh.600999")
+                text += brief + "\n"
+                text += content  + "\n"
+
             send_server(title, text)
 
             # logout at last
