@@ -30,7 +30,7 @@ def main():
         d11=t11.strftime('%Y-%m-%d')
         #TIME
         result = pd.DataFrame()
-        k = bs.query_history_k_data_plus("sh.000001","date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
+        k = bs.query_history_k_data_plus("sz.399001","date,code,close",start_date=d11, end_date=d,frequency="d", adjustflag="3")
         result=pd.concat([result,k.get_data()],axis=0,ignore_index=True)
         result.date=pd.to_datetime(result.date)
         result=result.sort_values(by='date',ascending=False)
@@ -50,7 +50,7 @@ def main():
         print(close_today)
         #
         if(close_today<=MAdiv):
-            tilt="今日沪指低于÷1.2线"
+            tilt="今日深指低于÷1.2线"
         else:
             if(close_today<=MA2500):
                 judge="÷1.2"
@@ -58,11 +58,11 @@ def main():
                 judge="MA2500"
             else:
                 judge="*1.2"
-            tilt="今日沪指高于"+judge+"线"
+            tilt="今日深指高于"+judge+"线"
         print(tilt)
         #GENERATE TITLE
         # 斜杠用来代码换行
-        cont="今日沪指收盘: "+str(close_today)+"\n今日MA2500数据 \n\t *1.2: "+str(MAmul)+"\n\t 均："+str(MA2500)+"\n\t /1.2: "+str(MAdiv)
+        cont="今日深指收盘: "+str(close_today)+"\n今日MA2500数据 \n\t *1.2: "+str(MAmul)+"\n\t 均："+str(MA2500)+"\n\t /1.2: "+str(MAdiv)
         test_out = cont.replace('\n','\n\n')
         print(cont)
         send_server(tilt,cont) #插入在需要推送的地方，我这里的"Her said"是我的标题，msg是我前面爬取的消息'''
