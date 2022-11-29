@@ -124,7 +124,7 @@ def main():
 
             STOCK_CODES = os.environ.get('STOCK_CODES')
             if STOCK_CODES == '' or STOCK_CODES is None:
-                STOCK_CODES = 'sh.000001'
+                STOCK_CODES = 'sz.399001'
 
             for code in STOCK_CODES.split():
                 brief, content = calc_MA2500(code)
