@@ -22,6 +22,6 @@ jobs:
 
       - name: Calculate
         env:
-          SCKEY: ${{ secrets.SEND }}
           STOCK_CODES: ${{ secrets.STOCKS }}
+          DDING_KEY: ${{ secrets.DDING_KEY }}
         run: python ./calc.py
