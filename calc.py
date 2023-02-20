@@ -5,25 +5,31 @@ import pandas as pd
 import datetime as dt
 import requests
 import os
+import json
 
-SCKEY=os.environ.get('SCKEY')
+DDING_KEY=os.environ.get('DDING_KEY')
 
-def send_server(title, text):
-    print(title)
-    print()
-    print(text)
-
-    if SCKEY == '' or SCKEY is None:
-        print("\nWarning: 微信消息无法发送，请设置sendkey!")
+def send_dingding_msg(msg, timeout=5):
+    if not DDING_KEY:
+        print("\nWarning: 钉钉消息无法发送，请设置sendkey!")
         return
-
-    api = "https://sctapi.ftqq.com/{}.send".format(SCKEY)
-    content = text.replace('\n','\n\n')
-    data = {
-            'text':title, #标题
-            'desp':content} #内容
-    res = requests.post(api, data = data)
-    return(res)
+    access_token = DDING_KEY
+    headers = {
+        'Content-Type': "application/json"
+    }
+    url = "https://oapi.dingtalk.com/robot/send"
+    querystring = {"access_token":access_token}
+    content = {
+        "msgtype": "text",
+        "text": {
+            "content": msg
+        }
+    }
+    try:
+        response = requests.post(url, data=json.dumps(content), headers=headers, params=querystring, timeout=timeout)
+        print(f'dingding send :{response.text}')
+    except Exception as e:
+        print(f'dingding msg err:{e}')
 
 def get_stock_code_name(stock_code):
     # 获取证券基本资料
@@ -86,61 +92,65 @@ def calc_MA2500(stock_code):
     #     高于MA2500线: =
     #     高于x1.2线:   ✗
     #
+    title = ''
     if (close_today <= MAdiv):
-        recommend = "✔"
-        title = date_today_str + stock_name + "低于÷1.2线" + ": " + recommend
+        recommend = "+"
+        title = "低于 ÷1.2" + ": " + recommend
     else:
         if (close_today <= MA2500):
             judge = "÷1.2"
-            recommend = "✓"
+            recommend = "+"
         elif (close_today <= MAmul):
             judge = "MA2500"
             recommend = "="
         else:
             judge = "*1.2"
-            recommend = "✗"
-        title = date_today_str + stock_name + "高于"+judge+"线" + ": " + recommend
+            recommend = "-"
+        title = "高于 "+judge+ ": " + recommend
 
-    #GENERATE TITLE
-    # 斜杠用来代码换行
-    text = date_today_str + stock_name + "收盘: " + str(close_today) + \
-           "\n" + date_today_str + "MA2500数据" +                 \
-           "\n\t *1.2点数: " + str(MAmul) +    \
-           "\n\t 均值点数 "   + str(MA2500) +   \
-           "\n\t /1.2点数: " + str(MAdiv)
-
-    return title, text
+    arr = [date_today_str,
+        stock_name,
+       title,
+       "today: "+str(close_today),
+       f"today/avg:{round(close_today/MA2500,3)}",
+       "*1.2: "+str(MAmul),
+       "avg: "+ str(MA2500),
+       "/1.2: "  + str(MAdiv)
+       ]
+    return arr
 
 def main():
-    title = "每周MA2500计算服务异常"
-    text = "登录获取股市数据失败"
-
     try:
         # login boastock server first
         lg = bs.login()
         if (lg.error_code == '0'):
-            title = ''
-            text = ''
-
             STOCK_CODES = os.environ.get('STOCK_CODES')
             if STOCK_CODES == '' or STOCK_CODES is None:
-                STOCK_CODES = 'sz.399001'
+                STOCK_CODES = 'sh.000001 sh.000016 sh.000300 sz.399001 sz.399106 sh.000905 sh.000015'
 
+            result = []
             for code in STOCK_CODES.split():
-                brief, content = calc_MA2500(code)
-                if title == "":
-                    title = brief
+                output = []
+                try:
+                    output = calc_MA2500(code)
+                except Exception as e:
+                    print(Exception, e)
+                    output = ["error", str(e)]
 
-                text += brief + "\n"
-                text += content  + "\n"
+                print(code, output)
+                result.append(output)
 
-            send_server(title, text)
+            dding_msg = "SoberBot MA2500\n %s" %(json.dumps(result, indent=4, ensure_ascii=False))
+            send_dingding_msg(dding_msg)
 
             # logout at last
             bs.logout
-    except Exception:
-        print(Exception)
-        send_server(title, text)
+    except Exception as e:
+        print(Exception, e)
+        dding_msg = "SoberBot MA2500 send error:" + str(e)
+        send_dingding_msg(dding_msg)
 
 if __name__ == '__main__':
     main()
+
+# 以MA2500/1.2线、MA2500均线、MA2500*1.2线、MA2500*1.4线、MA2500*1.6线为区间临界值
