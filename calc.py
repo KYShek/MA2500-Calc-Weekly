@@ -20,7 +20,7 @@ def send_server(title, text):
     api =  "https://sctapi.ftqq.com/{}.send".format(SCKEY)
     content = text.replace('\n','\n\n')
     data = {
-            'text':title, #标题
+            'title':title, #标题
             'desp':content} #内容
     res = requests.post(api, data = data)
     return(res)
