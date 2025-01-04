@@ -22,7 +22,10 @@ def send_server(title, text):
     data = {
             'title':title, #标题
             'desp':content} #内容
-    res = requests.post(api, data = data)
+    headers = {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+    res = requests.post(api, json = data, headers=headers)
     return(res)
 
 def get_stock_code_name(stock_code):
