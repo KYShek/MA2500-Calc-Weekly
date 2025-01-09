@@ -92,7 +92,7 @@ def calc_MA2500(stock_code):
     #
     if (close_today <= MA1):
         recommend = "极度低估"
-        title = date_today_str + stock_name + "低于÷1.2线" + ": " + recommend
+        title = stock_name + "低于÷1.2线" + ": " + recommend
     else:
         if (close_today <= MA2):
             judge = "÷1.2"
@@ -109,12 +109,12 @@ def calc_MA2500(stock_code):
         else:
             judge = "*1.6"
             recommend = "玩命"
-        title = date_today_str + stock_name + "高于"+judge+"线" + ": " + recommend
+        title = stock_name + "高于"+judge+"线" + ": " + recommend
 
     #GENERATE TITLE
     # 斜杠用来代码换行
     text = date_today_str + stock_name + "收盘: " + str(close_today) +  \
-           "\n" + date_today_str + "MA2500数据" +                       \
+           "\n" + "当日MA2500数据:" +                      \
            "\n\t /1.2点数: " + str(MA1) +                               \
            "\n\t 点数均值: "  + str(MA2) +                               \
            "\n\t *1.2点数: " + str(MA3) +                               \
