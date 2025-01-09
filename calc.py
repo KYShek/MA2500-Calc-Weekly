@@ -62,9 +62,11 @@ def calc_MA2500(stock_code):
     # 计算MA2500均值
     MA2500 = today.close.astype(float).mean()
     # 计算MA2500的上下约20%的浮动区间, 并且只取两位小数
-    MAdiv = int(MA2500/1.2*100)/100
-    MAmul = int((MA2500*1.2)*100)/100
-    MA2500 = int(MA2500*100)/100
+    MA1 = int(MA2500/1.2*100)/100
+    MA2 = int(MA2500*100)/100
+    MA3 = int((MA2500*1.2)*100)/100
+    MA4 = int((MA2500*1.4)*100)/100
+    MA5 = int((MA2500*1.6)*100)/100
     # 今天的收盘
     close_today = int(float(result.loc[0,'close'])*100)/100
     date_today = result.loc[0,'date']
@@ -74,40 +76,50 @@ def calc_MA2500(stock_code):
     # for debug purpose
     print()
     print("{}{}收盘点数: {}".format(date_today_str, stock_name, close_today))
-    print("MA2500÷1.2点数: {}".format(MAdiv))
-    print("MA2500    点数: {}".format(MA2500))
-    print("MA2500x1.2点数: {}".format(MAmul))
+    print("MA2500÷1.2点数: {}".format(MA1))
+    print("MA2500    点数: {}".format(MA2))
+    print("MA2500x1.2点数: {}".format(MA3))
     print()
     '''
 
     # recommend:
-    #     低于÷1.2线:   ✔
-    #     高于÷1.2线:   ✓
-    #     高于MA2500线: =
-    #     高于x1.2线:   ✗
+    #     低于÷1.2线:   极度低估
+    #     高于÷1.2线:   比较便宜
+    #     高于MA2500线: 估值合理
+    #     高于x1.2线:   轻度泡沫
+    #     高于x1.4线:   高度泡沫
+    #     高于x1.6线:   玩命
     #
-    if (close_today <= MAdiv):
-        recommend = "✔"
+    if (close_today <= MA1):
+        recommend = "极度低估"
         title = date_today_str + stock_name + "低于÷1.2线" + ": " + recommend
     else:
-        if (close_today <= MA2500):
+        if (close_today <= MA2):
             judge = "÷1.2"
-            recommend = "✓"
-        elif (close_today <= MAmul):
+            recommend = "比较便宜"
+        elif (close_today <= MA3):
             judge = "MA2500"
-            recommend = "="
+            recommend = "估值合理"
+        elif (close_today <= MA4):
+            judge = "x1.2"
+            recommend = "轻度泡沫"
+        elif (close_today <= MA5):
+            judge = "x1.4"
+            recommend = "高度泡沫"
         else:
-            judge = "*1.2"
-            recommend = "✗"
+            judge = "*1.6"
+            recommend = "玩命"
         title = date_today_str + stock_name + "高于"+judge+"线" + ": " + recommend
 
     #GENERATE TITLE
     # 斜杠用来代码换行
-    text = date_today_str + stock_name + "收盘: " + str(close_today) + \
-           "\n" + date_today_str + "MA2500数据" +                 \
-           "\n\t *1.2点数: " + str(MAmul) +    \
-           "\n\t 均值点数 "   + str(MA2500) +   \
-           "\n\t /1.2点数: " + str(MAdiv)
+    text = date_today_str + stock_name + "收盘: " + str(close_today) +  \
+           "\n" + date_today_str + "MA2500数据" +                       \
+           "\n\t /1.2点数: " + str(MA1) +                               \
+           "\n\t 点数均值: "  + str(MA2) +                               \
+           "\n\t *1.2点数: " + str(MA3) +                               \
+           "\n\t *1.4点数: " + str(MA4) +                               \
+           "\n\t *1.6点数: " + str(MA5)
 
     return title, text
 
