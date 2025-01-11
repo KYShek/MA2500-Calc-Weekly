@@ -17,12 +17,15 @@ def send_server(title, text):
         print("\nWarning: 微信消息无法发送，请设置sendkey!")
         return
 
-    api = "https://sctapi.ftqq.com/{}.send".format(SCKEY)
+    api =  "https://sctapi.ftqq.com/{}.send".format(SCKEY)
     content = text.replace('\n','\n\n')
     data = {
-            'text':title, #标题
+            'title':title, #标题
             'desp':content} #内容
-    res = requests.post(api, data = data)
+    headers = {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+    res = requests.post(api, json = data, headers=headers)
     return(res)
 
 def get_stock_code_name(stock_code):
